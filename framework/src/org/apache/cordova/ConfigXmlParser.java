@@ -36,8 +36,6 @@ public class ConfigXmlParser {
 
     private String launchUrl = "file:///android_asset/www/index.html";
     private CordovaPreferences prefs = new CordovaPreferences();
-    private Whitelist internalWhitelist = new Whitelist();
-    private Whitelist externalWhitelist = new Whitelist();
     private ArrayList<PluginEntry> pluginEntries = new ArrayList<PluginEntry>(20);
 
     public CordovaPreferences getPreferences() {

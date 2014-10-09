@@ -86,8 +86,6 @@ public class AndroidWebView extends WebView implements CordovaWebView {
     private WebChromeClient.CustomViewCallback mCustomViewCallback;
 
     private CordovaResourceApi resourceApi;
-    private Whitelist internalWhitelist;
-    private Whitelist externalWhitelist;
     private CordovaPreferences preferences;
     // The URL passed to loadUrl(), not necessarily the URL of the current page.
     String loadedUrl;
