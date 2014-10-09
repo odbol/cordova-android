@@ -72,14 +72,6 @@ public class Config {
         return parser.getPreferences().getString("errorurl", null);
     }
 
-    public static Whitelist getWhitelist() {
-        return parser.getInternalWhitelist();
-    }
-
-    public static Whitelist getExternalWhitelist() {
-        return parser.getExternalWhitelist();
-    }
-
     public static List<PluginEntry> getPluginEntries() {
         return parser.getPluginEntries();
     }
