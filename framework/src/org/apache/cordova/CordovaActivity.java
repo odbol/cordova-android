@@ -266,7 +266,7 @@ public class CordovaActivity extends Activity implements CordovaInterface {
             // If all else fails, return a default WebView
             ret = new AndroidWebView(this);
         }
-        ret.init(this, pluginEntries, internalWhitelist, externalWhitelist, preferences);
+        ret.init(this, pluginEntries, preferences);
         return ret;
     }
 

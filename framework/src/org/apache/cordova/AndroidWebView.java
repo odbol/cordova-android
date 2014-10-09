@@ -111,14 +111,11 @@ public class AndroidWebView extends WebView implements CordovaWebView {
     // Use two-phase init so that the control will work with XML layouts.
     @Override
     public void init(CordovaInterface cordova, List<PluginEntry> pluginEntries,
-            Whitelist internalWhitelist, Whitelist externalWhitelist,
             CordovaPreferences preferences) {
         if (this.cordova != null) {
             throw new IllegalStateException();
         }
         this.cordova = cordova;
-        this.internalWhitelist = internalWhitelist;
-        this.externalWhitelist = externalWhitelist;
         this.preferences = preferences;
 
         pluginManager = new PluginManager(this, this.cordova, pluginEntries);
