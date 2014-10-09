@@ -46,20 +46,6 @@ public class Config {
             parser = new ConfigXmlParser();
         }
     }
-    
-    /**
-     * Add entry to approved list of URLs (whitelist)
-     *
-     * @param origin        URL regular expression to allow
-     * @param subdomains    T=include all subdomains under origin
-     */
-    public static void addWhiteListEntry(String origin, boolean subdomains) {
-        if (parser == null) {
-            Log.e(TAG, "Config was not initialised. Did you forget to Config.init(this)?");
-            return;
-        }
-        parser.getInternalWhitelist().addWhiteListEntry(origin, subdomains);
-    }
 
     public static String getStartUrl() {
         if (parser == null) {
