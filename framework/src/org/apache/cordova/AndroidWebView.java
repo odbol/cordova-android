@@ -749,16 +749,6 @@ public class AndroidWebView extends WebView implements CordovaWebView {
     }
 
     @Override
-    public Whitelist getWhitelist() {
-        return this.internalWhitelist;
-    }
-
-    @Override
-    public Whitelist getExternalWhitelist() {
-        return this.externalWhitelist;
-    }
-
-    @Override
     public CordovaPreferences getPreferences() {
         return preferences;
     }

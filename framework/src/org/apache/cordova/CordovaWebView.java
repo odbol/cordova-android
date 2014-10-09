@@ -81,8 +81,6 @@ public interface CordovaWebView {
 
     PluginManager getPluginManager();
 
-    Whitelist getWhitelist();
-    Whitelist getExternalWhitelist();
     CordovaPreferences getPreferences();
     
     void onFilePickerResult(Uri uri);
