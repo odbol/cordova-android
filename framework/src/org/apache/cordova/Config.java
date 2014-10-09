@@ -61,34 +61,6 @@ public class Config {
         parser.getInternalWhitelist().addWhiteListEntry(origin, subdomains);
     }
 
-    /**
-     * Determine if URL is in approved list of URLs to load.
-     *
-     * @param url
-     * @return true if whitelisted
-     */
-    public static boolean isUrlWhiteListed(String url) {
-        if (parser == null) {
-            Log.e(TAG, "Config was not initialised. Did you forget to Config.init(this)?");
-            return false;
-        }
-        return parser.getInternalWhitelist().isUrlWhiteListed(url);
-    }
-
-    /**
-     * Determine if URL is in approved list of URLs to launch external applications.
-     *
-     * @param url
-     * @return true if whitelisted
-     */
-    public static boolean isUrlExternallyWhiteListed(String url) {
-        if (parser == null) {
-            Log.e(TAG, "Config was not initialised. Did you forget to Config.init(this)?");
-            return false;
-        }
-        return parser.getExternalWhitelist().isUrlWhiteListed(url);
-    }
-
     public static String getStartUrl() {
         if (parser == null) {
             return "file:///android_asset/www/index.html";
