@@ -40,14 +40,6 @@ public class ConfigXmlParser {
     private Whitelist externalWhitelist = new Whitelist();
     private ArrayList<PluginEntry> pluginEntries = new ArrayList<PluginEntry>(20);
 
-    public Whitelist getInternalWhitelist() {
-        return internalWhitelist;
-    }
-
-    public Whitelist getExternalWhitelist() {
-        return externalWhitelist;
-    }
-
     public CordovaPreferences getPreferences() {
         return prefs;
     }
