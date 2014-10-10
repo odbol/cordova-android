@@ -54,33 +54,13 @@ public class CordovaUriHelper {
             // If any returned true, then the request was handled.
             return true;
         }
-        else if(url.startsWith("file://") | url.startsWith("data:"))
+        else if(url.startsWith("file://") || url.startsWith("data:"))
         {
             //This directory on WebKit/Blink based webviews contains SQLite databases!
             //DON'T CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
             return url.contains("app_webview");
         }
-        else if (appView.getWhitelist().isUrlWhiteListed(url)) {
-            // Allow internal navigation
-            return false;
-        }
-        else if (appView.getExternalWhitelist().isUrlWhiteListed(url))
-        {
-            try {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setComponent(null);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-                    intent.setSelector(null);
-                }
-                this.cordova.getActivity().startActivity(intent);
-                return true;
-            } catch (android.content.ActivityNotFoundException e) {
-                LOG.e(TAG, "Error loading url " + url, e);
-            }
-        }
-        // Intercept the request and do nothing with it -- block it
-        return true;
+        // Allow internal navigation
+        return false;
     }
 }

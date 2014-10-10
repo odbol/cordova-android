@@ -171,6 +171,17 @@ public class CordovaPlugin {
     }
 
     /**
+     * Hook for blocking the loading of external resources.
+     *
+     * This will be called when the WebView's shouldInterceptRequest wants to know whether to
+     * open a connection to an external resource. Return true to block the request. If all plugins
+     * return false, the request will proceed.
+     */
+    public boolean shouldBlockRequest(String url) {
+        return false;
+    }
+
+    /**
      * By specifying a <url-filter> in config.xml you can map a URL (using startsWith atm) to this method.
      *
      * @param url				The URL that is trying to be loaded in the Cordova webview.

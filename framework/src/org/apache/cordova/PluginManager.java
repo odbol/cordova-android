@@ -254,6 +254,22 @@ public class PluginManager {
     }
 
     /**
+     * Called when the webview is going to request an external resource.
+     *
+     * @param url               The URL that is being requested.
+     * @return                  Return false to allow the URL to load, return true to prevent the URL from loading.
+     */
+    public boolean shouldBlockRequest(String url) {
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null && plugin.shouldBlockRequest(url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Called when the URL of the webview changes.
      *
      * @param url               The URL that is being changed to.
