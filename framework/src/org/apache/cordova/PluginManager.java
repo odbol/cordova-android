@@ -276,19 +276,31 @@ public class PluginManager {
      * Called when the webview is going to change the URL of the loaded content.
      *
      * This delegates to the installed plugins, which must all return true for
-     * this method to return true.
+     * this method to return true. A true result will allow the new page to load;
+     * a false result will prevent the page from loading.
      *
-     * @param url               The URL that is being requested.
-     * @return                  Return true to allow the URL to load, return false to prevent the URL from loading.
+     * @param url       The URL that is being requested.
+     * @return          Returns null if all plugins return null (the default).
+     *                  This indicates that the default policy should be followed.
+     *                  Otherwise, returns true if all plugins have returned true,
+     *                  or false if any returned false.
      */
-    public boolean shouldAllowNavigation(String url) {
+    public Boolean shouldAllowNavigation(String url) {
+        Boolean anyResponded = null;
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
-            if (plugin != null && !plugin.shouldAllowNavigation(url)) {
-                return false;
+            if (plugin != null) {
+                Boolean result = plugin.shouldAllowNavigation(url);
+                if (result != null) {
+                    anyResponded = true;
+                    if (!result) {
+                        return false;
+                    }
+                }
             }
         }
-        return true;
+        // This will be true if all plugins allow the request, or null if no plugins override the method
+        return anyResponded;
     }
 
     /**
@@ -296,19 +308,31 @@ public class PluginManager {
      * an Intent for an URL.
      *
      * This delegates to the installed plugins, which must all return true for
-     * this method to return true.
+     * this method to return true. A true result will allow the URL to launch;
+     * a false result will prevent the URL from loading.
      *
-     * @param url               The URL that is being requested.
-     * @return                  Return true to allow the URL to load, return false to prevent the URL from loading.
+     * @param url       The URL that is being requested.
+     * @return          Returns null if all plugins return null (the default).
+     *                  This indicates that the default policy should be followed.
+     *                  Otherwise, returns true if all plugins have returned true,
+     *                  or false if any returned false.
      */
-    public boolean shouldOpenExternalUrl(String url) {
+    public Boolean shouldOpenExternalUrl(String url) {
+        Boolean anyResponded = null;
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
-            if (plugin != null && !plugin.shouldOpenExternalUrl(url)) {
-                return false;
+            if (plugin != null) {
+                Boolean result = plugin.shouldOpenExternalUrl(url);
+                if (result != null) {
+                    anyResponded = true;
+                    if (!result) {
+                        return false;
+                    }
+                }
             }
         }
-        return true;
+        // This will be true if all plugins allow the request, or null if no plugins override the method
+        return anyResponded;
     }
 
     /**

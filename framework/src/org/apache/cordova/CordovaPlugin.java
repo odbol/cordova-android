@@ -178,7 +178,7 @@ public class CordovaPlugin {
      * open a connection to an external resource. Return false to block the request. Only if
      * all plugins return true, then the request will proceed.
      */
-    public boolean shouldAllowRequest(String url) {
+    public Boolean shouldAllowRequest(String url) {
         return true;
     }
 
@@ -189,8 +189,8 @@ public class CordovaPlugin {
      * Return false to block the navigation. Only if all plugins return true, then the navigation
      * will proceed.
      */
-    public boolean shouldAllowNavigation(String url) {
-        return true;
+    public Boolean shouldAllowNavigation(String url) {
+        return null;
     }
 
     /**
@@ -200,8 +200,8 @@ public class CordovaPlugin {
      * to handle the URL. Return false to block the navigation. Only if all plugins return true,
      * then the URL be opened.
      */
-    public boolean shouldOpenExternalUrl(String url) {
-        return true;
+    public Boolean shouldOpenExternalUrl(String url) {
+        return null;
     }
 
     /**
