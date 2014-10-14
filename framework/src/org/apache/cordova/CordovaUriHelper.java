@@ -23,6 +23,7 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.WebView;
 
 public class CordovaUriHelper {
@@ -49,18 +50,37 @@ public class CordovaUriHelper {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     public boolean shouldOverrideUrlLoading(String url) {
         // Give plugins the chance to handle the url
-        if (this.appView.getPluginManager().onOverrideUrlLoading(url)) {
+        if (this.appView.getPluginManager().shouldAllowNavigation(url)) {
+            // Allow internal navigation
+            return false;
+        }
+        if (this.appView.getPluginManager().shouldOpenExternalUrl(url)) {
             // Do nothing other than what the plugins wanted.
-            // If any returned true, then the request was handled.
+            // If any returned false, then the request was either blocked
+            // completely, or handled out-of-band by the plugin. If they all
+            // returned true, then we should open the URL here.
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setComponent(null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    intent.setSelector(null);
+                }
+                this.cordova.getActivity().startActivity(intent);
+                return true;
+            } catch (android.content.ActivityNotFoundException e) {
+                Log.e(TAG, "Error loading url " + url, e);
+            }
             return true;
         }
-        else if(url.startsWith("file://") || url.startsWith("data:"))
+        if(url.startsWith("file://") || url.startsWith("data:"))
         {
             //This directory on WebKit/Blink based webviews contains SQLite databases!
             //DON'T CHANGE THIS UNLESS YOU KNOW WHAT YOU'RE DOING!
             return url.contains("app_webview");
         }
-        // Allow internal navigation
-        return false;
+        // Block by default
+        return true;
     }
 }

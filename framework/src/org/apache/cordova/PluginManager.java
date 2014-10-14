@@ -256,17 +256,59 @@ public class PluginManager {
     /**
      * Called when the webview is going to request an external resource.
      *
+     * This delegates to the installed plugins, which must all return true for
+     * this method to return true.
+     *
      * @param url               The URL that is being requested.
-     * @return                  Return false to allow the URL to load, return true to prevent the URL from loading.
+     * @return                  Return true to allow the resource to load, return false to prevent the resource from loading.
      */
-    public boolean shouldBlockRequest(String url) {
+    public boolean shouldAllowRequest(String url) {
         for (PluginEntry entry : this.entryMap.values()) {
             CordovaPlugin plugin = pluginMap.get(entry.service);
-            if (plugin != null && plugin.shouldBlockRequest(url)) {
-                return true;
+            if (plugin != null && !plugin.shouldAllowRequest(url)) {
+                return false;
             }
         }
-        return false;
+        return true;
+    }
+
+    /**
+     * Called when the webview is going to change the URL of the loaded content.
+     *
+     * This delegates to the installed plugins, which must all return true for
+     * this method to return true.
+     *
+     * @param url               The URL that is being requested.
+     * @return                  Return true to allow the URL to load, return false to prevent the URL from loading.
+     */
+    public boolean shouldAllowNavigation(String url) {
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null && !plugin.shouldAllowNavigation(url)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Called when the webview is going not going to navigate, but may launch
+     * an Intent for an URL.
+     *
+     * This delegates to the installed plugins, which must all return true for
+     * this method to return true.
+     *
+     * @param url               The URL that is being requested.
+     * @return                  Return true to allow the URL to load, return false to prevent the URL from loading.
+     */
+    public boolean shouldOpenExternalUrl(String url) {
+        for (PluginEntry entry : this.entryMap.values()) {
+            CordovaPlugin plugin = pluginMap.get(entry.service);
+            if (plugin != null && !plugin.shouldOpenExternalUrl(url)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

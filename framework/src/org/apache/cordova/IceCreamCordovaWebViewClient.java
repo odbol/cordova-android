@@ -72,7 +72,7 @@ public class IceCreamCordovaWebViewClient extends AndroidWebViewClient {
     }
 
     private boolean isUrlHarmful(String url) {
-        return (appView.getPluginManager().shouldBlockRequest(url)) ||
+        return (!appView.getPluginManager().shouldAllowRequest(url)) ||
             ((url.startsWith("file://") || url.startsWith("data:")) && url.contains("app_webview"));
     }
 

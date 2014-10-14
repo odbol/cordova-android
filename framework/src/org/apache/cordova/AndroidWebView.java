@@ -349,7 +349,7 @@ public class AndroidWebView extends WebView implements CordovaWebView {
         if (LOG.isLoggable(LOG.DEBUG) && !url.startsWith("javascript:")) {
             LOG.d(TAG, ">>> loadUrlNow()");
         }
-        if (url.startsWith("file://") || url.startsWith("javascript:") || internalWhitelist.isUrlWhiteListed(url)) {
+        if (url.startsWith("file://") || url.startsWith("javascript:") || pluginManager.shouldAllowNavigation(url)) {
             super.loadUrl(url);
         }
     }
@@ -424,7 +424,7 @@ public class AndroidWebView extends WebView implements CordovaWebView {
         if (!openExternal) {
 
             // Make sure url is in whitelist
-            if (url.startsWith("file://") || internalWhitelist.isUrlWhiteListed(url)) {
+            if (url.startsWith("file://") || pluginManager.shouldAllowNavigation(url)) {
                 // TODO: What about params?
                 // Load new URL
                 loadUrlIntoView(url, true);
